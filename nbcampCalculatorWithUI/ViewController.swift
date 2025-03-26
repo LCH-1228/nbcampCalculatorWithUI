@@ -11,6 +11,7 @@ import SnapKit
 class ViewController: UIViewController {
     
     let resultLabel = UILabel()
+    var greedStackView = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +22,14 @@ class ViewController: UIViewController {
     }
     
     private func configureUI() {
-        let titleList = [
-            ["7", "8", "9", "+"],
-            ["4", "5", "6", "-"],
-            ["1", "2", "3", "*"],
-            ["AC", "0", "=", "/"]
-        ]
+        let buttonTitleList = ["7", "8", "9", "+",
+                          "4", "5", "6", "-",
+                          "1", "2", "3", "*",
+                          "AC", "0", "=", "/"]
         makeLabel()
-        let greedStackView = makeVerticalStackView(nameList: titleList)
+        let buttons = makeGreedButtons(buttonTitleList: buttonTitleList, row: 4, column: 4)
+        let horizontalStackViews = makeHorizontalStackViews(greedButtons: buttons)
+        let verticalStackView = makeVerticalStackView(horizontalStackViews: horizontalStackViews)
     }
     
     private func makeLabel() {
@@ -48,37 +49,57 @@ class ViewController: UIViewController {
         }
     }
     
-    private func makeHorizentalStackView(nameList: [String]) -> UIStackView {
-        let horizentalStackView = UIStackView()
-
-        horizentalStackView.axis = .horizontal
-        horizentalStackView.backgroundColor = .black
-        horizentalStackView.spacing = 10
-        horizentalStackView.distribution = .fillEqually
-        
-        for i in 0..<4 {
-            let button = UIButton()
-            button.setTitle(nameList[i], for: .normal)
-            button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
-            button.layer.cornerRadius = 40
-            
-            horizentalStackView.addArrangedSubview(button)
-            
-            button.snp.makeConstraints {
-                $0.size.equalTo(80)
-            }
-        }
+    private func makeGreedButtons(buttonTitleList: [String], row: Int, column: Int) -> [[UIButton]] {
+        var rowButtons = [[UIButton()]]
+        var columnButtons = [UIButton()]
+        rowButtons.remove(at: 0)
+        for y in 0..<row {
+            columnButtons.removeAll()
+            for x in 0..<column {
+                let index = (y * row) + x
+                let button = UIButton()
+                button.setTitle(buttonTitleList[index], for: .normal)
+                button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+                button.layer.cornerRadius = 40
                 
-        view.addSubview(horizentalStackView)
-        
-        horizentalStackView.snp.makeConstraints {
-            $0.height.equalTo(80)
-            $0.centerY.equalToSuperview()
+                button.snp.makeConstraints {
+                    $0.size.equalTo(80)
+                }
+                columnButtons.append(button)
+            }
+            rowButtons.append(columnButtons)
         }
-        return horizentalStackView
+        return rowButtons
     }
     
-    func makeVerticalStackView(nameList: [[String]]) -> UIStackView {
+    private func makeHorizontalStackViews(greedButtons: [[UIButton]]) -> [UIStackView] {
+        var horizontalStackViews = [UIStackView()]
+        
+        horizontalStackViews.remove(at: 0)
+        for buttonY in greedButtons {
+            
+            let horizontalStackView = UIStackView()
+            
+            for buttonX in buttonY {
+                horizontalStackView.axis = .horizontal
+                horizontalStackView.backgroundColor = .black
+                horizontalStackView.spacing = 10
+                horizontalStackView.distribution = .fillEqually
+                
+                horizontalStackView.addArrangedSubview(buttonX)
+            }
+            
+            horizontalStackView.snp.makeConstraints {
+                $0.height.equalTo(80)
+            }
+            
+            horizontalStackViews.append(horizontalStackView)
+        }
+        
+        return horizontalStackViews
+    }
+    
+    func makeVerticalStackView(horizontalStackViews: [UIStackView]) -> UIStackView {
         let verticalStackView = UIStackView()
         
         verticalStackView.axis = .vertical
@@ -86,8 +107,7 @@ class ViewController: UIViewController {
         verticalStackView.spacing = 10
         verticalStackView.distribution = .fillEqually
         
-        for i in 0..<4 {
-            let horizontalStackView = makeHorizentalStackView(nameList: nameList[i])
+        for horizontalStackView in horizontalStackViews {
             verticalStackView.addArrangedSubview(horizontalStackView)
         }
         
