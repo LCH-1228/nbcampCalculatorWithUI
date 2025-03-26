@@ -21,7 +21,9 @@ class ViewController: UIViewController {
     }
     
     private func configureUI() {
+        let titleList = ["7", "8", "9", "+"]
         makeLabel()
+        makeHorizentalStackView(nameList: titleList)
     }
     
     private func makeLabel() {
@@ -39,5 +41,35 @@ class ViewController: UIViewController {
             $0.trailing.equalTo(view.snp.trailing).inset(30)
             $0.top.equalTo(view.snp.top).inset(200)
         }
+    }
+    
+    private func makeHorizentalStackView(nameList: [String]) -> UIStackView {
+        let horizentalStackView = UIStackView()
+
+        horizentalStackView.axis = .horizontal
+        horizentalStackView.backgroundColor = .black
+        horizentalStackView.spacing = 10
+        horizentalStackView.distribution = .fillEqually
+        
+        for i in 0..<4 {
+            let button = UIButton()
+            button.setTitle(nameList[i], for: .normal)
+            button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
+            button.layer.cornerRadius = 40
+            
+            horizentalStackView.addArrangedSubview(button)
+            
+            button.snp.makeConstraints {
+                $0.size.equalTo(80)
+            }
+        }
+                
+        view.addSubview(horizentalStackView)
+        
+        horizentalStackView.snp.makeConstraints {
+            $0.height.equalTo(80)
+            $0.centerY.equalToSuperview()
+        }
+        return horizentalStackView
     }
 }
