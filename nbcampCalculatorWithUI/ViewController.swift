@@ -28,8 +28,10 @@ class ViewController: UIViewController {
                           "AC", "0", "=", "/"]
         makeLabel()
         let buttons = makeGreedButtons(buttonTitleList: buttonTitleList, row: 4, column: 4)
+        let calculationButtons = [buttons[0][3], buttons[1][3], buttons[2][3], buttons[3][0], buttons[3][2], buttons[3][3]]
         let horizontalStackViews = makeHorizontalStackViews(greedButtons: buttons)
         let verticalStackView = makeVerticalStackView(horizontalStackViews: horizontalStackViews)
+        setCalculationButtonCollor(buttons: calculationButtons)
     }
     
     private func makeLabel() {
@@ -59,6 +61,7 @@ class ViewController: UIViewController {
                 let index = (y * row) + x
                 let button = UIButton()
                 button.setTitle(buttonTitleList[index], for: .normal)
+                button.titleLabel?.font = .boldSystemFont(ofSize: 30)
                 button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
                 button.layer.cornerRadius = 40
                 
@@ -119,5 +122,11 @@ class ViewController: UIViewController {
             $0.top.equalTo(resultLabel.snp.bottom).offset(60)
         }
         return verticalStackView
+    }
+    
+    func setCalculationButtonCollor(buttons: [UIButton]) {
+        for button in buttons {
+            button.backgroundColor = .orange
+        }
     }
 }
