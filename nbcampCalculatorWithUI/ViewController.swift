@@ -21,9 +21,14 @@ class ViewController: UIViewController {
     }
     
     private func configureUI() {
-        let titleList = ["7", "8", "9", "+"]
+        let titleList = [
+            ["7", "8", "9", "+"],
+            ["4", "5", "6", "-"],
+            ["1", "2", "3", "*"],
+            ["AC", "0", "=", "/"]
+        ]
         makeLabel()
-        makeHorizentalStackView(nameList: titleList)
+        let greedStackView = makeVerticalStackView(nameList: titleList)
     }
     
     private func makeLabel() {
@@ -71,5 +76,28 @@ class ViewController: UIViewController {
             $0.centerY.equalToSuperview()
         }
         return horizentalStackView
+    }
+    
+    func makeVerticalStackView(nameList: [[String]]) -> UIStackView {
+        let verticalStackView = UIStackView()
+        
+        verticalStackView.axis = .vertical
+        verticalStackView.backgroundColor = .black
+        verticalStackView.spacing = 10
+        verticalStackView.distribution = .fillEqually
+        
+        for i in 0..<4 {
+            let horizontalStackView = makeHorizentalStackView(nameList: nameList[i])
+            verticalStackView.addArrangedSubview(horizontalStackView)
+        }
+        
+        view.addSubview(verticalStackView)
+        
+        verticalStackView.snp.makeConstraints {
+            $0.width.equalTo(350)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(resultLabel.snp.bottom).offset(60)
+        }
+        return verticalStackView
     }
 }
