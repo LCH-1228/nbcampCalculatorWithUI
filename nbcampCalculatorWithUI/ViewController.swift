@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
-    
+    var result = "0"
     let resultLabel = UILabel()
     var greedStackView = UIStackView()
     
@@ -26,16 +26,20 @@ class ViewController: UIViewController {
                           "4", "5", "6", "-",
                           "1", "2", "3", "*",
                           "AC", "0", "=", "/"]
+        let buttonSelectorList = ["num7", "num8", "num9", "add",
+                          "num4", "num5", "num6", "sub",
+                          "num1", "num2", "num3", "mul",
+                          "ac", "num0", "result", "div"]
         makeLabel()
-        let buttons = makeGreedButtons(buttonTitleList: buttonTitleList, row: 4, column: 4)
+        let buttons = makeGreedButtons(buttonTitleList: buttonTitleList, row: 4, column: 4, selectorList: buttonSelectorList)
         let calculationButtons = [buttons[0][3], buttons[1][3], buttons[2][3], buttons[3][0], buttons[3][2], buttons[3][3]]
         let horizontalStackViews = makeHorizontalStackViews(greedButtons: buttons)
-        let verticalStackView = makeVerticalStackView(horizontalStackViews: horizontalStackViews)
+        makeVerticalStackView(horizontalStackViews: horizontalStackViews)
         setCalculationButtonCollor(buttons: calculationButtons)
     }
     
     private func makeLabel() {
-        resultLabel.text = "12345"
+        resultLabel.text = "\(result)"
         resultLabel.backgroundColor = .black
         resultLabel.textColor = .white
         resultLabel.textAlignment = .right
@@ -51,7 +55,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func makeGreedButtons(buttonTitleList: [String], row: Int, column: Int) -> [[UIButton]] {
+    private func makeGreedButtons(buttonTitleList: [String], row: Int, column: Int, selectorList: [String]) -> [[UIButton]] {
         var rowButtons = [[UIButton()]]
         var columnButtons = [UIButton()]
         rowButtons.remove(at: 0)
@@ -64,6 +68,9 @@ class ViewController: UIViewController {
                 button.titleLabel?.font = .boldSystemFont(ofSize: 30)
                 button.backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1.0)
                 button.layer.cornerRadius = 40
+                
+                let selector = Selector("\(selectorList[index])ButtonClicked")
+                button.addTarget(self, action: selector, for: .touchUpInside)
                 
                 button.snp.makeConstraints {
                     $0.size.equalTo(80)
@@ -102,7 +109,7 @@ class ViewController: UIViewController {
         return horizontalStackViews
     }
     
-    func makeVerticalStackView(horizontalStackViews: [UIStackView]) -> UIStackView {
+    func makeVerticalStackView(horizontalStackViews: [UIStackView]) {
         let verticalStackView = UIStackView()
         
         verticalStackView.axis = .vertical
@@ -121,12 +128,112 @@ class ViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(resultLabel.snp.bottom).offset(60)
         }
-        return verticalStackView
     }
     
     func setCalculationButtonCollor(buttons: [UIButton]) {
         for button in buttons {
             button.backgroundColor = .orange
         }
+    }
+    
+    func resultLabelUpdateByButton(button: String) {
+        guard button != "ac" else {
+            result = "0"
+            resultLabel.text = result
+            return
+        }
+        
+        guard button != "+" && !result.contains("+") else {
+            print("이미 더하기가 있습니다.")
+            return
+        }
+
+        result += button
+        
+        if result.first == "0" {
+            result.removeFirst()
+        }
+        
+        resultLabel.text = result
+    }
+
+    @objc
+    func num0ButtonClicked() {
+        resultLabelUpdateByButton(button: "0")
+    }
+    
+    @objc
+    func num1ButtonClicked() {
+        resultLabelUpdateByButton(button: "1")
+    }
+    
+    @objc
+    func num2ButtonClicked() {
+        resultLabelUpdateByButton(button: "2")
+    }
+    
+    @objc
+    func num3ButtonClicked() {
+        resultLabelUpdateByButton(button: "3")
+    }
+    
+    @objc
+    func num4ButtonClicked() {
+        resultLabelUpdateByButton(button: "4")
+    }
+    
+    @objc
+    func num5ButtonClicked() {
+        resultLabelUpdateByButton(button: "5")
+    }
+    
+    @objc
+    func num6ButtonClicked() {
+        resultLabelUpdateByButton(button: "6")
+    }
+    
+    @objc
+    func num7ButtonClicked() {
+        resultLabelUpdateByButton(button: "7")
+    }
+    
+    @objc
+    func num8ButtonClicked() {
+        resultLabelUpdateByButton(button: "8")
+    }
+    
+    @objc
+    func num9ButtonClicked() {
+        resultLabelUpdateByButton(button: "9")
+    }
+    
+    @objc
+    func acButtonClicked() {
+        resultLabelUpdateByButton(button: "ac")
+    }
+    
+    @objc
+    func addButtonClicked() {
+        resultLabelUpdateByButton(button: "+")
+    }
+    
+    @objc
+    func subButtonClicked() {
+        resultLabelUpdateByButton(button: "-")
+    }
+    
+    @objc
+    func mulButtonClicked() {
+        resultLabelUpdateByButton(button: "*")
+    }
+    
+    @objc
+    func divButtonClicked() {
+        resultLabelUpdateByButton(button: "/")
+    }
+    
+    @objc
+    func resultButtonClicked() {
+        resultLabelUpdateByButton(button: "=")
     }
 }
