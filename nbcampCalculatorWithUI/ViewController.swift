@@ -23,13 +23,13 @@ class ViewController: UIViewController {
     
     private func configureUI() {
         let buttonTitleList = ["7", "8", "9", "+",
-                          "4", "5", "6", "-",
-                          "1", "2", "3", "*",
-                          "AC", "0", "=", "/"]
+                               "4", "5", "6", "-",
+                               "1", "2", "3", "*",
+                               "AC", "0", "=", "/"]
         let buttonSelectorList = ["num7", "num8", "num9", "add",
-                          "num4", "num5", "num6", "sub",
-                          "num1", "num2", "num3", "mul",
-                          "ac", "num0", "result", "div"]
+                                  "num4", "num5", "num6", "sub",
+                                  "num1", "num2", "num3", "mul",
+                                  "ac", "num0", "result", "div"]
         makeLabel()
         let buttons = makeGreedButtons(buttonTitleList: buttonTitleList, row: 4, column: 4, selectorList: buttonSelectorList)
         let calculationButtons = [buttons[0][3], buttons[1][3], buttons[2][3], buttons[3][0], buttons[3][2], buttons[3][3]]
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
         return horizontalStackViews
     }
     
-    func makeVerticalStackView(horizontalStackViews: [UIStackView]) {
+    private func makeVerticalStackView(horizontalStackViews: [UIStackView]) {
         let verticalStackView = UIStackView()
         
         verticalStackView.axis = .vertical
@@ -130,24 +130,43 @@ class ViewController: UIViewController {
         }
     }
     
-    func setCalculationButtonCollor(buttons: [UIButton]) {
+    private func setCalculationButtonCollor(buttons: [UIButton]) {
         for button in buttons {
             button.backgroundColor = .orange
         }
     }
     
-    func resultLabelUpdateByButton(button: String) {
+    private func resultLabelUpdateByButton(button: String) {
         guard button != "ac" else {
             result = "0"
             resultLabel.text = result
             return
         }
-        
-        guard button != "+" && !result.contains("+") else {
-            print("이미 더하기가 있습니다.")
+        guard (button != "+" && button != "-" && button != "*" && button != "/") || result != "0" else {
+            print("0에 기호 추가 불가")
             return
         }
-
+        
+        guard button != "+" || result.last != "+" else {
+            print("더하기는 연속 입력 불가")
+            return
+        }
+        
+        guard button != "-" || result.last != "-" else {
+            print("빼기는 연속 입력 불가")
+            return
+        }
+        
+        guard button != "*" || result.last != "*" else {
+            print("곱하기는 연속 입력 불가")
+            return
+        }
+        
+        guard button != "/" || result.last != "/" else {
+            print("나누기는 연속 입력 불가")
+            return
+        }
+        
         result += button
         
         if result.first == "0" {
@@ -156,7 +175,7 @@ class ViewController: UIViewController {
         
         resultLabel.text = result
     }
-
+    
     @objc
     func num0ButtonClicked() {
         resultLabelUpdateByButton(button: "0")
@@ -234,6 +253,17 @@ class ViewController: UIViewController {
     
     @objc
     func resultButtonClicked() {
-        resultLabelUpdateByButton(button: "=")
+        if let calculation = calculate(expression: result) {
+            result = String(calculation)
+            resultLabel.text = result
+        }
+    }
+    
+    func calculate(expression: String) -> Int? {
+        if let result = NSExpression(format: expression).expressionValue(with: nil, context: nil) as? Int {
+            return result
+        } else {
+            return nil
+        }
     }
 }
