@@ -9,16 +9,38 @@ import UIKit
 
 class CalculatorLabel: UILabel {
     
-    static let label = UILabel()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
     
-    static func makeLabel(variable: Any) -> UILabel {
+    init(title: String?) {
+        super.init(frame: .zero)
+        if let title {
+            self.text = title
+        }
+        setConfig()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    internal func setConfig() {
+        self.backgroundColor = .black
+        self.textColor = .white
+        self.textAlignment = .right
+        self.font = .boldSystemFont(ofSize: 60)
+        self.snp.makeConstraints {
+            $0.height.equalTo(100)
+        }
+    }
+}
+
+class SubCalculatorLabel: CalculatorLabel {
+    override internal func setConfig() {
+        super.setConfig()
+        self.textColor = .gray
+        self.font = .boldSystemFont(ofSize: 40)
         
-        label.text = "\(variable)"
-        label.backgroundColor = .black
-        label.textColor = .white
-        label.textAlignment = .right
-        label.font = .boldSystemFont(ofSize: 60)
-        
-        return label
     }
 }

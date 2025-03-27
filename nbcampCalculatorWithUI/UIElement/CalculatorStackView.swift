@@ -9,46 +9,38 @@ import UIKit
 
 class CalculatorStackView: UIStackView {
     
-    static var horizontalStackViews = [UIStackView()]
-    static let verticalStackView = UIStackView()
-    
-    static func makeHorizontalStackViews(greedButtons: [[UIButton]]) -> [UIStackView] {
-        
-        horizontalStackViews.remove(at: 0)
-        for buttonY in greedButtons {
-            
-            let horizontalStackView = UIStackView()
-            
-            for buttonX in buttonY {
-                horizontalStackView.axis = .horizontal
-                horizontalStackView.backgroundColor = .black
-                horizontalStackView.spacing = 10
-                horizontalStackView.distribution = .fillEqually
-                
-                horizontalStackView.addArrangedSubview(buttonX)
-            }
-            
-            horizontalStackView.snp.makeConstraints {
-                $0.height.equalTo(80)
-            }
-            
-            horizontalStackViews.append(horizontalStackView)
-        }
-        
-        return horizontalStackViews
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
-    static func makeVerticalStackView(horizontalStackViews: [UIStackView]) -> UIView {
-        
-        verticalStackView.axis = .vertical
-        verticalStackView.backgroundColor = .black
-        verticalStackView.spacing = 10
-        verticalStackView.distribution = .fillEqually
-        
-        for horizontalStackView in horizontalStackViews {
-            verticalStackView.addArrangedSubview(horizontalStackView)
+    init(axis: NSLayoutConstraint.Axis, addArrangedSubview: [UIView]?) {
+        super.init(frame: .zero)
+        self.axis = axis
+        if let addArrangedSubview {
+            for i in 0..<addArrangedSubview.count {
+                self.addArrangedSubview(addArrangedSubview[i])
+            }
         }
+        setConfig()
+    }
+    
+    required init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    internal func setConfig() {
+        self.backgroundColor = .black
+        self.spacing = 10
+        self.distribution = .fillEqually
         
-        return verticalStackView
+    }
+}
+
+class CalculatorHorizontalStackView: CalculatorStackView {
+    override internal func setConfig() {
+        super.setConfig()
+        self.snp.makeConstraints {
+            $0.height.equalTo(80)
+        }
     }
 }
