@@ -29,7 +29,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     private func resultLabelUpdateByButton(button: String) {
         guard button != "ac" else {
             result = "0"
-//            resultLabel.text = result
+            calculatorView.resultLabel.text = result
             return
         }
         guard (button != "+" && button != "-" && button != "*" && button != "/") || result != "0" else {
@@ -63,14 +63,14 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
             result.removeFirst()
         }
         
-//        resultLabel.text = result
+        calculatorView.resultLabel.text = result
     }
     
     @objc
     func resultButtonClicked() {
         if let calculation = calculate(expression: result) {
             result = String(calculation)
-//            resultLabel.text = result
+            calculatorView.resultLabel.text = result
         }
     }
     
