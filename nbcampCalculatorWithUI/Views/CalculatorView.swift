@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CalculatorViewDelegate: NSObject {
-    func buttonClick()
+    func buttonClick(sender: String)
 }
 
 class CalculatorView: UIView {
@@ -67,7 +67,7 @@ class CalculatorView: UIView {
         
         // 숫자버튼 클릭시 buttonClicked 호출
         numButtons.forEach {
-            $0.addTarget(self, action: #selector(numButtonClicked), for: .touchUpInside)
+            $0.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
         }
         
         // 기능버튼 리스트
@@ -80,7 +80,7 @@ class CalculatorView: UIView {
         
         // 기능버튼 클릭시 buttonClicked 호출
         funcButtons.forEach {
-            $0.addTarget(self, action: #selector(funcButtonClicked), for: .touchUpInside)
+            $0.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
         }
         
 
@@ -128,13 +128,8 @@ class CalculatorView: UIView {
     }
     
     @objc
-    private func numButtonClicked() {
-        delegate?.buttonClick()
-    }
-    
-    @objc
-    private func funcButtonClicked() {
-        delegate?.buttonClick()
+    private func buttonClicked(_ sender: UIButton) {
+        delegate?.buttonClick(sender: sender.currentTitle ?? "")
     }
     
 }

@@ -82,7 +82,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
         }
     }
     
-    func buttonClick() {
-        print("출력")
+    func buttonClick(sender: String) {
+        resultLabelUpdateByButton(button: sender)
     }
 }
