@@ -21,68 +21,55 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     
     override func loadView() {
         super.loadView()
-//        var calculatorView = CalculatorView(frame: self.view.frame)
         self.view = calculatorView
     }
     
-    
-    private func resultLabelUpdateByButton(button: String) {
-        guard button != "ac" else {
+    func buttonClick(sender: String) {
+        guard sender != "=" else {
+            if let calculationResult = NSExpression(format: result).expressionValue(with: nil, context: nil) as? Int {
+                result = String(calculationResult)
+                calculatorView.subLabel.text = calculatorView.resultLabel.text
+                calculatorView.resultLabel.text = result
+            }
+            return
+        }
+        guard sender != "ac" else {
             result = "0"
+            calculatorView.subLabel.text = calculatorView.resultLabel.text
             calculatorView.resultLabel.text = result
             return
         }
-        guard (button != "+" && button != "-" && button != "*" && button != "/") || result != "0" else {
+        guard (sender != "+" && sender != "-" && sender != "*" && sender != "/") || result != "0" else {
             print("0에 기호 추가 불가")
             return
         }
         
-        guard button != "+" || result.last != "+" else {
+        guard sender != "+" || result.last != "+" else {
             print("더하기는 연속 입력 불가")
             return
         }
         
-        guard button != "-" || result.last != "-" else {
+        guard sender != "-" || result.last != "-" else {
             print("빼기는 연속 입력 불가")
             return
         }
         
-        guard button != "*" || result.last != "*" else {
+        guard sender != "*" || result.last != "*" else {
             print("곱하기는 연속 입력 불가")
             return
         }
         
-        guard button != "/" || result.last != "/" else {
+        guard sender != "/" || result.last != "/" else {
             print("나누기는 연속 입력 불가")
             return
         }
         
-        result += button
+        result += sender
         
         if result.first == "0" {
             result.removeFirst()
         }
         
         calculatorView.resultLabel.text = result
-    }
-    
-    @objc
-    func resultButtonClicked() {
-        if let calculation = calculate(expression: result) {
-            result = String(calculation)
-            calculatorView.resultLabel.text = result
-        }
-    }
-    
-    func calculate(expression: String) -> Int? {
-        if let result = NSExpression(format: expression).expressionValue(with: nil, context: nil) as? Int {
-            return result
-        } else {
-            return nil
-        }
-    }
-    
-    func buttonClick(sender: String) {
-        resultLabelUpdateByButton(button: sender)
     }
 }
