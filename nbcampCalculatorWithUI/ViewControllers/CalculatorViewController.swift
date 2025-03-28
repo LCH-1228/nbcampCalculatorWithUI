@@ -26,7 +26,8 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     
     func buttonClick(sender: String) {
         guard sender != "=" else {
-            if let calculationResult = NSExpression(format: result).expressionValue(with: nil, context: nil) as? Int {
+            let calculator = Calculator()
+            if let calculationResult = calculator.calculate(expression: result) {
                 result = String(calculationResult)
                 calculatorView.subLabel.text = calculatorView.resultLabel.text
                 calculatorView.resultLabel.text = result
