@@ -25,14 +25,12 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     }
     
     func buttonClick(sender: String) {
-        /*
         guard sender != "=" else {
             let calculator = Calculator()
-            if let calculationResult = calculator.calculate(expression: result) {
-                result = String(calculationResult)
-                calculatorView.subLabel.text = calculatorView.resultLabel.text
-                calculatorView.resultLabel.text = result
-            }
+            let calculateResult = calculator.calculate(input: result)
+            result = calculateResult
+            calculatorView.subLabel.text = calculatorView.resultLabel.text
+            calculatorView.resultLabel.text = result
             return
         }
         guard sender != "ac" else {
@@ -73,6 +71,5 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
         }
         
         calculatorView.resultLabel.text = result
-         */
     }
 }
