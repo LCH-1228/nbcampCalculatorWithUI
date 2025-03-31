@@ -25,6 +25,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     }
     
     func buttonClick(sender: String) {
+        /*
         guard sender != "=" else {
             let calculator = Calculator()
             if let calculationResult = calculator.calculate(expression: result) {
@@ -72,5 +73,6 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
         }
         
         calculatorView.resultLabel.text = result
+         */
     }
 }
