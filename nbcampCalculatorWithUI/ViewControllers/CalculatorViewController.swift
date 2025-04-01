@@ -27,10 +27,35 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     func buttonClick(sender: String) {
         guard sender != "=" else {
             let calculator = Calculator()
-            let calculateResult = calculator.calculate(input: result)
-            result = calculateResult
-            calculatorView.subLabel.text = calculatorView.resultLabel.text
-            calculatorView.resultLabel.text = result
+            do {
+                let calculateResult =  try calculator.calculate(input: result)
+                result = calculateResult
+                calculatorView.subLabel.text = calculatorView.resultLabel.text
+                calculatorView.resultLabel.text = result
+            } catch(let error) {
+                switch error as! CustomError {
+                case .devideZero:
+                    printAlert(title: "연산 불가", message: "입력값 중 0을 나눌수 없어\n 입력값을 초기화 했습니다.", buttonTitle: "확인")
+                    result = "0"
+                    calculatorView.subLabel.text = result
+                    calculatorView.resultLabel.text = result
+                case .devidedByZero:
+                    printAlert(title: "연산 불가", message: "입력값 중 0으로 나눌수 없어\n 입력값을 초기화 했습니다.", buttonTitle: "확인")
+                    result = "0"
+                    calculatorView.subLabel.text = result
+                    calculatorView.resultLabel.text = result
+                case .remaindZero:
+                    printAlert(title: "연산 불가", message: "0을 나눌수 없기에 입력값을 초기화 했습니다.", buttonTitle: "확인")
+                    result = "0"
+                    calculatorView.subLabel.text = result
+                    calculatorView.resultLabel.text = result
+                case .remaindByZero:
+                    printAlert(title: "연산 불가", message: "0으로 나눌수 없기에 입력값을 초기화 했습니다.", buttonTitle: "확인")
+                    result = "0"
+                    calculatorView.subLabel.text = result
+                    calculatorView.resultLabel.text = result
+                }
+            }
             return
         }
         guard sender != "ac" else {
@@ -71,5 +96,11 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
         }
         
         calculatorView.resultLabel.text = result
+    }
+    
+    func printAlert(title: String, message: String, buttonTitle: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: buttonTitle, style: .cancel))
+        self.present(alertController, animated: true)
     }
 }
