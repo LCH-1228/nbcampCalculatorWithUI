@@ -58,7 +58,7 @@ class CalculatorView: UIView {
     private func drawButton() {
         
         // 숫자버튼 리스트
-        let numButtonList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        let numButtonList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
         
         // 숫자버튼 생성(배경색: 검정)
         let numButtons: [CalculatorButton] = numButtonList.map {
@@ -103,8 +103,12 @@ class CalculatorView: UIView {
         let fourthHorizontalStackView = CalculatorHorizontalStackView(
             axis: .horizontal,
             addArrangedSubview: [
-                funcButtons[5], numButtons[0], funcButtons[4], funcButtons[3]
+                funcButtons[5], numButtons[0], numButtons[10], funcButtons[3]
             ])
+        let fifthHorizontalStackView = CalculatorHorizontalStackView(
+            axis: .horizontal,
+            addArrangedSubview: [funcButtons[4]]
+        )
         
 
         // horizontalStackView로 verticalStackView 생성
@@ -114,7 +118,9 @@ class CalculatorView: UIView {
                 firstHorizontalStackView,
                 secondHorizontalStackView,
                 thirdHorizontalStackView,
-                fourthHorizontalStackView])
+                fourthHorizontalStackView,
+                fifthHorizontalStackView
+            ])
         
         // verticalStackview view에 표시
         self.addSubview(verticalStackview)

@@ -10,7 +10,18 @@
 		9BA09D2B2D93797E0093E6F5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9BA09D2A2D93797E0093E6F5 /* SnapKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9B1FDA822D9A2A9200646AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9BA09D092D9379470093E6F5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9BA09D102D9379470093E6F5;
+			remoteInfo = nbcampCalculatorWithUI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		9B1FDA7E2D9A2A9200646AA8 /* nbcampCalculatorWithUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nbcampCalculatorWithUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BA09D112D9379470093E6F5 /* nbcampCalculatorWithUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nbcampCalculatorWithUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -25,6 +36,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		9B1FDA7F2D9A2A9200646AA8 /* nbcampCalculatorWithUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = nbcampCalculatorWithUITests;
+			sourceTree = "<group>";
+		};
 		9BA09D132D9379470093E6F5 /* nbcampCalculatorWithUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -36,6 +52,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9B1FDA7B2D9A2A9200646AA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9BA09D0E2D9379470093E6F5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -51,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				9BA09D132D9379470093E6F5 /* nbcampCalculatorWithUI */,
+				9B1FDA7F2D9A2A9200646AA8 /* nbcampCalculatorWithUITests */,
 				9BA09D122D9379470093E6F5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				9BA09D112D9379470093E6F5 /* nbcampCalculatorWithUI.app */,
+				9B1FDA7E2D9A2A9200646AA8 /* nbcampCalculatorWithUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -66,6 +91,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9B1FDA7D2D9A2A9200646AA8 /* nbcampCalculatorWithUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9B1FDA862D9A2A9200646AA8 /* Build configuration list for PBXNativeTarget "nbcampCalculatorWithUITests" */;
+			buildPhases = (
+				9B1FDA7A2D9A2A9200646AA8 /* Sources */,
+				9B1FDA7B2D9A2A9200646AA8 /* Frameworks */,
+				9B1FDA7C2D9A2A9200646AA8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B1FDA832D9A2A9200646AA8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				9B1FDA7F2D9A2A9200646AA8 /* nbcampCalculatorWithUITests */,
+			);
+			name = nbcampCalculatorWithUITests;
+			packageProductDependencies = (
+			);
+			productName = nbcampCalculatorWithUITests;
+			productReference = 9B1FDA7E2D9A2A9200646AA8 /* nbcampCalculatorWithUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9BA09D102D9379470093E6F5 /* nbcampCalculatorWithUI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9BA09D242D9379480093E6F5 /* Build configuration list for PBXNativeTarget "nbcampCalculatorWithUI" */;
@@ -99,6 +147,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					9B1FDA7D2D9A2A9200646AA8 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 9BA09D102D9379470093E6F5;
+					};
 					9BA09D102D9379470093E6F5 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -122,11 +174,19 @@
 			projectRoot = "";
 			targets = (
 				9BA09D102D9379470093E6F5 /* nbcampCalculatorWithUI */,
+				9B1FDA7D2D9A2A9200646AA8 /* nbcampCalculatorWithUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9B1FDA7C2D9A2A9200646AA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9BA09D0F2D9379470093E6F5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +197,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9B1FDA7A2D9A2A9200646AA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9BA09D0D2D9379470093E6F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,7 +213,49 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9B1FDA832D9A2A9200646AA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9BA09D102D9379470093E6F5 /* nbcampCalculatorWithUI */;
+			targetProxy = 9B1FDA822D9A2A9200646AA8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		9B1FDA842D9A2A9200646AA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mittiattar.nbcampCalculatorWithUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nbcampCalculatorWithUI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nbcampCalculatorWithUI";
+			};
+			name = Debug;
+		};
+		9B1FDA852D9A2A9200646AA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mittiattar.nbcampCalculatorWithUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/nbcampCalculatorWithUI.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/nbcampCalculatorWithUI";
+			};
+			name = Release;
+		};
 		9BA09D252D9379480093E6F5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,6 +430,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9B1FDA862D9A2A9200646AA8 /* Build configuration list for PBXNativeTarget "nbcampCalculatorWithUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B1FDA842D9A2A9200646AA8 /* Debug */,
+				9B1FDA852D9A2A9200646AA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9BA09D0C2D9379470093E6F5 /* Build configuration list for PBXProject "nbcampCalculatorWithUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

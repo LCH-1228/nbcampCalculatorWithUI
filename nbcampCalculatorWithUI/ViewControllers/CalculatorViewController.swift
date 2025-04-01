@@ -31,10 +31,24 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
             }
         guard sender != "=" else {
             let calculator = Calculator()
-            if let calculationResult = calculator.calculate(expression: result) {
-                result = String(calculationResult)
+            do {
+                let calculateResult =  try calculator.calculate(input: result)
+                result = calculateResult
                 calculatorView.subLabel.text = calculatorView.resultLabel.text
                 calculatorView.resultLabel.text = result
+            } catch(let error) {
+                switch error as! CustomError {
+                case .devideZero:
+                    printAlert(title: "연산 불가", message: "입력값 중 0을 나눌수 없어\n 입력값을 초기화 했습니다.", buttonTitle: "확인")
+                    result = "0"
+                    calculatorView.subLabel.text = result
+                    calculatorView.resultLabel.text = result
+                case .devidedByZero:
+                    printAlert(title: "연산 불가", message: "입력값 중 0으로 나눌수 없어\n 입력값을 초기화 했습니다.", buttonTitle: "확인")
+                    result = "0"
+                    calculatorView.subLabel.text = result
+                    calculatorView.resultLabel.text = result
+                }
             }
             return
         }
@@ -61,5 +75,11 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
         }
         
         calculatorView.resultLabel.text = result
+    }
+    
+    func printAlert(title: String, message: String, buttonTitle: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: buttonTitle, style: .cancel))
+        self.present(alertController, animated: true)
     }
 }
