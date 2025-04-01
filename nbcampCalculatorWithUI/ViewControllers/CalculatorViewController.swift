@@ -25,6 +25,10 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     }
     
     func buttonClick(sender: String) {
+        guard sender != "=" || (result.last != "+" && result.last != "-" && result.last != "*" && result.last != "/") else {
+            print("기호에 = 불가")
+            return
+            }
         guard sender != "=" else {
             let calculator = Calculator()
             if let calculationResult = calculator.calculate(expression: result) {
@@ -41,27 +45,12 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
             return
         }
         guard (sender != "+" && sender != "-" && sender != "*" && sender != "/") || result != "0" else {
-            print("0에 기호 추가 불가")
+            print("초기값 0에 기호 추가 불가")
             return
         }
         
-        guard sender != "+" || result.last != "+" else {
-            print("더하기는 연속 입력 불가")
-            return
-        }
-        
-        guard sender != "-" || result.last != "-" else {
-            print("빼기는 연속 입력 불가")
-            return
-        }
-        
-        guard sender != "*" || result.last != "*" else {
-            print("곱하기는 연속 입력 불가")
-            return
-        }
-        
-        guard sender != "/" || result.last != "/" else {
-            print("나누기는 연속 입력 불가")
+        guard (sender != "+" && sender != "-" && sender != "*" && sender != "/") || (result.last != "+" && result.last != "-" && result.last != "*" && result.last != "/") else {
+            print("연산기호 연속 입력 불가")
             return
         }
         
