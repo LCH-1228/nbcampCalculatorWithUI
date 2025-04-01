@@ -44,16 +44,6 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
                     result = "0"
                     calculatorView.subLabel.text = result
                     calculatorView.resultLabel.text = result
-                case .remaindZero:
-                    printAlert(title: "연산 불가", message: "0을 나눌수 없기에 입력값을 초기화 했습니다.", buttonTitle: "확인")
-                    result = "0"
-                    calculatorView.subLabel.text = result
-                    calculatorView.resultLabel.text = result
-                case .remaindByZero:
-                    printAlert(title: "연산 불가", message: "0으로 나눌수 없기에 입력값을 초기화 했습니다.", buttonTitle: "확인")
-                    result = "0"
-                    calculatorView.subLabel.text = result
-                    calculatorView.resultLabel.text = result
                 }
             }
             return

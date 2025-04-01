@@ -83,17 +83,8 @@ public class Calculator {
                         array = try getresult(test: SubtractOperation(), input: array)
                     }
                 }
-            } catch(let error) {
-                switch error as! CustomError {
-                case .devideZero:
-                    throw CustomError.devideZero
-                case .devidedByZero:
-                    throw CustomError.devidedByZero
-                case .remaindZero:
-                    throw CustomError.remaindZero
-                case .remaindByZero:
-                    throw CustomError.remaindByZero
-                }
+            } catch {
+                throw error
             }
         }
         
@@ -140,17 +131,8 @@ public class Calculator {
             inputArray.remove(at: index - 1)
             
             inputArray.insert(String(tempValue), at: index - 1)
-        } catch(let error) {
-            switch error as! CustomError {
-            case .devideZero:
-                throw CustomError.devideZero
-            case .devidedByZero:
-                throw CustomError.devidedByZero
-            case .remaindZero:
-                throw CustomError.remaindZero
-            case .remaindByZero:
-                throw CustomError.remaindByZero
-            }
+        } catch {
+            throw error
         }
         
         return inputArray
