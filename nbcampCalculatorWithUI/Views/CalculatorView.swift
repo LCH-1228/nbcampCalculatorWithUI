@@ -71,12 +71,15 @@ class CalculatorView: UIView {
         }
         
         // 기능버튼 리스트
-        let funcButtonList = ["+", "-", "*", "/", "=", "ac"]
+        let funcButtonList = ["+", "-", "*", "/", "=", "AC"]
         
         // 기능버튼 생성(배경: 오렌지)
         let funcButtons: [OrangeCalculatorButton] = funcButtonList.map {
             OrangeCalculatorButton(title: $0)
         }
+        
+        // = 버튼 제약 조건 삭제
+        funcButtons[4].snp.removeConstraints()
         
         // 기능버튼 클릭시 buttonClicked 호출
         funcButtons.forEach {

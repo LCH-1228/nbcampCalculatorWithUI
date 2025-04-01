@@ -52,7 +52,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
             }
             return
         }
-        guard sender != "ac" else {
+        guard sender != "AC" else {
             result = "0"
             calculatorView.subLabel.text = calculatorView.resultLabel.text
             calculatorView.resultLabel.text = result
