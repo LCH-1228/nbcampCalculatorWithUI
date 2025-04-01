@@ -86,8 +86,8 @@ public class Calculator {
         return array[0]
     }
     
-    func readFromString(input: String) -> [String] {
-        let pattern = /\d+|[-+*\/]/
+    public func readFromString(input: String) -> [String] {
+        let pattern = /\d([|.\d{1,2}]?)+|[-+*\/]/
         return input.matches(of: pattern).map { String($0.0) }
     }
     
@@ -111,7 +111,7 @@ public class Calculator {
         
         let firstNumber = Double(inputArray[index - 1])!
         let secondNumber = Double(inputArray[index + 1])!
-        let tempValue: Int = Int(try! test.calculate(firstNumber, secondNumber))
+        let tempValue: Double = Double(try! test.calculate(firstNumber, secondNumber))
         
         inputArray.remove(at: index + 1)
         inputArray.remove(at: index)
