@@ -83,7 +83,16 @@ public class Calculator {
                 }
             }
         }
-        return array[0]
+        
+        let result = array[0]
+        let formattedResult = Double(result)!
+        print(formattedResult)
+        
+        if formattedResult == formattedResult.rounded(.down) {
+            return String(format: "%.0f", formattedResult)
+        } else {
+            return result
+        }
     }
     
     public func readFromString(input: String) -> [String] {
