@@ -13,7 +13,7 @@ protocol CalculatorViewDelegate: NSObject {
 
 class CalculatorView: UIView {
     
-    var delegate: CalculatorViewController?
+    var delegate: CalculatorViewDelegate?
     
     let resultLabel = CalculatorLabel(title: "0")
     let subLabel = SubCalculatorLabel(title: "0")
