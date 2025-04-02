@@ -67,7 +67,7 @@ class CalculatorView: UIView {
         
         // 숫자버튼 클릭시 buttonClicked 호출
         numButtons.forEach {
-            $0.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
+            $0.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         }
         
         // 기능버튼 리스트
@@ -83,7 +83,7 @@ class CalculatorView: UIView {
         
         // 기능버튼 클릭시 buttonClicked 호출
         funcButtons.forEach {
-            $0.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchUpInside)
+            $0.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         }
         
 
@@ -137,7 +137,7 @@ class CalculatorView: UIView {
     }
     
     @objc
-    private func buttonClicked(_ sender: UIButton) {
+    private func buttonClicked(sender: UIButton) {
         delegate?.buttonClick(sender: sender.currentTitle ?? "")
     }
     
