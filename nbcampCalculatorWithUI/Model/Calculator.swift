@@ -44,50 +44,50 @@ public class Calculator {
                     guard isDiv != false else {
                         let osLogMessage = "(debug) 입력에 곱셈 포함. 나눗셈 미포함. 곱셈 먼저"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: MultiplyOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: MultiplyCalculation(), input: array, indexArray: indexArray)
                         continue
                     }
                     
                     guard isMul != false else {
                         let osLogMessage = "(debug) 입력에 나눗셈 포함. 곱셈 미포함. 나눗셈 먼저"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: DivideOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: DivideCalculation(), input: array, indexArray: indexArray)
                         continue
                     }
                     
                     if Int(mulIndex) < Int(divIndex) {
                         let osLogMessage = "(debug) 입력에 곱셈, 나눗셈 포함. 곱셈이 먼저 있음"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: MultiplyOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: MultiplyCalculation(), input: array, indexArray: indexArray)
                     } else {
                         let osLogMessage = "(debug) 입력에 곱셈, 나눗셈 포함. 나눗셈이 먼저 있음"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: DivideOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: DivideCalculation(), input: array, indexArray: indexArray)
                     }
                     
                 case (true, false): //덧셈뺄셈만 있음
                     guard isSub != false else {
                         let osLogMessage = "(debug) 입력에 덧셈만 있음"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: AddOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: AddCalculation(), input: array, indexArray: indexArray)
                         continue
                     }
                     
                     guard isAdd != false else {
                         let osLogMessage = "(debug) 입력에 뺄셈만 있음"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: SubtractOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: SubtractCalculation(), input: array, indexArray: indexArray)
                         continue
                     }
                     
                     if Int(addIndex) < Int(subIndex) {
                         let osLogMessage = "(debug) 입력에 덧셈, 뺄셈 포함. 덧셈이 먼저 있음"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: AddOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: AddCalculation(), input: array, indexArray: indexArray)
                     } else {
                         let osLogMessage = "(debug) 입력에 덧셈, 뺄셈 포함. 뺄셈이 먼저 있음"
                         os_log(.debug, log: .default, "\(osLogMessage)")
-                        array = try getresult(test: SubtractOperation(), input: array, indexArray: indexArray)
+                        array = try getresult(operation: SubtractCalculation(), input: array, indexArray: indexArray)
                     }
                 }
             } catch {
@@ -96,7 +96,7 @@ public class Calculator {
         }
         
         let result = array[0]
-        let formattedResult = Double(result)!
+        let formattedResult = result.toDouble
         print(formattedResult)
         
         if formattedResult == formattedResult.rounded(.down) {
@@ -111,29 +111,29 @@ public class Calculator {
         return input.matches(of: pattern).map { String($0.0) }
     }
     
-    func getresult(test: Operation, input: [String], indexArray: [Int]) throws -> [String] {
+    func getresult(operation: CalculationProtocol, input: [String], indexArray: [Int]) throws -> [String] {
         
         var inputArray = input
         var index = 0
         
-        switch test {
-        case is AddOperation:
+        switch operation {
+        case is AddCalculation:
             index = indexArray[0]
-        case is SubtractOperation:
+        case is SubtractCalculation:
             index = indexArray[1]
-        case is MultiplyOperation:
+        case is MultiplyCalculation:
             index = indexArray[2]
-        case is DivideOperation:
+        case is DivideCalculation:
             index = indexArray[3]
         default:
             print("out of index")
         }
         
-        let firstNumber = Double(inputArray[index - 1]) ?? 0
-        let secondNumber = Double(inputArray[index + 1]) ?? 0
+        let firstNumber = inputArray[index - 1]
+        let secondNumber = inputArray[index + 1]
         
         do {
-            let tempValue: Double = Double(try test.calculate(firstNumber, secondNumber))
+            let tempValue = try operation.calculate(firstNumber, secondNumber)
             inputArray.remove(at: index + 1)
             inputArray.remove(at: index)
             inputArray.remove(at: index - 1)
