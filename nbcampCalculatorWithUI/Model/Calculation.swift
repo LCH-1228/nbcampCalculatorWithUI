@@ -8,41 +8,49 @@ import Foundation
 
 protocol CalculationProtocol {
     
-    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> Double
+    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> String
     
 }
 
 class AddCalculation: CalculationProtocol {
     
-    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> Double {
-        return firstNumber.toDouble + secondNumber.toDouble
+    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> String {
+        let decimalNum1 = NSDecimalNumber(string: firstNumber)
+        let decimalNum2 = NSDecimalNumber(string: secondNumber)
+        
+        let result = (decimalNum1 as Decimal) + (decimalNum2 as Decimal)
+        
+        return NSDecimalNumber(decimal: result).stringValue
     }
 }
 
 class SubtractCalculation: CalculationProtocol {
     
-    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> Double {
-        return firstNumber.toDouble - secondNumber.toDouble
+    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> String {
+        let decimalNum1 = NSDecimalNumber(string: firstNumber)
+        let decimalNum2 = NSDecimalNumber(string: secondNumber)
+        
+        let result = (decimalNum1 as Decimal) - (decimalNum2 as Decimal)
+        
+        return NSDecimalNumber(decimal: result).stringValue
     }
 }
 
 class MultiplyCalculation: CalculationProtocol {
     
-    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> Double {
+    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> String {
         let decimalNum1 = NSDecimalNumber(string: firstNumber)
         let decimalNum2 = NSDecimalNumber(string: secondNumber)
         
-        var result = (decimalNum1 as Decimal) * (decimalNum2 as Decimal)
-
-        var roundedResult = Decimal()
-        NSDecimalRound(&roundedResult, &result, 5, NSDecimalNumber.RoundingMode.plain)
-        return Double(truncating: roundedResult as NSNumber)
+        let result = (decimalNum1 as Decimal) * (decimalNum2 as Decimal)
+        
+        return NSDecimalNumber(decimal: result).stringValue
     }
 }
 
 class DivideCalculation: CalculationProtocol {
     
-    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> Double {
+    func calculate(_ firstNumber: String, _ secondNumber: String) throws -> String {
         guard firstNumber != "0" else {
             throw CustomError.devideZero
         }
@@ -52,10 +60,8 @@ class DivideCalculation: CalculationProtocol {
         let decimalNum1 = NSDecimalNumber(string: firstNumber)
         let decimalNum2 = NSDecimalNumber(string: secondNumber)
         
-        var result = (decimalNum1 as Decimal) / (decimalNum2 as Decimal)
+        let result = (decimalNum1 as Decimal) / (decimalNum2 as Decimal)
 
-        var roundedResult = Decimal()
-        NSDecimalRound(&roundedResult, &result, 5, NSDecimalNumber.RoundingMode.plain)
-        return Double(truncating: roundedResult as NSNumber)
+        return NSDecimalNumber(decimal: result).stringValue
     }
 }
