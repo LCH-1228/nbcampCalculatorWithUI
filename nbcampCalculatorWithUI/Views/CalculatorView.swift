@@ -13,14 +13,14 @@ protocol CalculatorViewDelegate: NSObject {
 
 class CalculatorView: UIView {
     
-    var delegate: CalculatorViewDelegate?
+    var delegate: CalculatorViewDelegate? //CalculatorViewDelegate를 dlegate 변수로 지정
     
-    let resultLabel = CalculatorLabel(title: "0")
-    let subLabel = SubCalculatorLabel(title: "0")
+    let resultLabel = CalculatorLabel(title: "0") //resultLabel 생성
+    let subLabel = SubCalculatorLabel(title: "0") //subLabel 생성
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        print("View가 로딩되었습니다.")
+        print("View가 로딩되었습니다.") // 디버깅을 위한 print()문
         setup()
     }
     
@@ -30,11 +30,11 @@ class CalculatorView: UIView {
     }
     
     private func setup() {
-        drawLabel()
-        drawButton()
+        setLabel() // Label 설정
+        drawButton() // Button 생성
     }
     
-    private func drawLabel() {
+    private func setLabel() {
         
         // resultLabel view에 표시
         self.addSubview(resultLabel)
@@ -46,8 +46,10 @@ class CalculatorView: UIView {
             $0.top.equalTo(self.snp.top).inset(200)
         }
         
+        // subLabel view에 표시
         self.addSubview(subLabel)
         
+        // subLabel constraints 설정
         subLabel.snp.makeConstraints {
             $0.leading.equalTo(self.snp.leading).inset(30)
             $0.trailing.equalTo(self.snp.trailing).inset(30)
@@ -55,7 +57,7 @@ class CalculatorView: UIView {
         }
     }
     
-    private func drawButton() {
+    private func drawButton() { // 버튼생성
         
         // 숫자버튼 리스트
         let numButtonList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
@@ -91,26 +93,26 @@ class CalculatorView: UIView {
         let firstHorizontalStackView = CalculatorHorizontalStackView(
             axis: .horizontal,
             addArrangedSubview: [
-                numButtons[7], numButtons[8], numButtons[9], funcButtons[0]
+                numButtons[7], numButtons[8], numButtons[9], funcButtons[0] //7, 8, 9, + 버튼
             ])
         let secondHorizontalStackView = CalculatorHorizontalStackView(
             axis: .horizontal,
             addArrangedSubview: [
-                numButtons[4], numButtons[5], numButtons[6], funcButtons[1]
+                numButtons[4], numButtons[5], numButtons[6], funcButtons[1] //4, 5, 6, - 버튼
             ])
         let thirdHorizontalStackView = CalculatorHorizontalStackView(
             axis: .horizontal,
             addArrangedSubview: [
-                numButtons[1], numButtons[2], numButtons[3], funcButtons[2]
+                numButtons[1], numButtons[2], numButtons[3], funcButtons[2] // 1, 2, 3, * 버튼
             ])
         let fourthHorizontalStackView = CalculatorHorizontalStackView(
             axis: .horizontal,
             addArrangedSubview: [
-                funcButtons[5], numButtons[0], numButtons[10], funcButtons[3]
+                funcButtons[5], numButtons[0], numButtons[10], funcButtons[3] // AC, 0 , ., / 버튼
             ])
         let fifthHorizontalStackView = CalculatorHorizontalStackView(
             axis: .horizontal,
-            addArrangedSubview: [funcButtons[4]]
+            addArrangedSubview: [funcButtons[4]] // = 버튼
         )
         
 
@@ -136,9 +138,9 @@ class CalculatorView: UIView {
         }
     }
     
-    @objc
-    private func buttonClicked(sender: UIButton) {
-        delegate?.buttonClick(sender: sender.currentTitle ?? "")
+    // 버튼클릭시 동작
+    @objc private func buttonClicked(sender: UIButton) {
+        delegate?.buttonClick(sender: sender.currentTitle ?? "") //delegate에게 buttonClick 요청
     }
     
 }
