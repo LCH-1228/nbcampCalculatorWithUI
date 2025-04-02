@@ -7,13 +7,13 @@
 //Calculator 클래스 정의
 import OSLog
 
-public class Calculator {
+class Calculator {
     
-    public init() {
+    init() {
         
     }
     
-    public func calculate(input: String) throws -> String {
+    func calculate(input: String) throws -> String {
                 
         var array = readFromString(input: input)
         
@@ -106,7 +106,7 @@ public class Calculator {
         }
     }
     
-    public func readFromString(input: String) -> [String] {
+    func readFromString(input: String) -> [String] {
         let pattern = /\d([|.\d{1,2}]?)+|[-+*\/]/
         return input.matches(of: pattern).map { String($0.0) }
     }
