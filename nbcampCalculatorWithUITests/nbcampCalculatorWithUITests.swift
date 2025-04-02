@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import nbcampCalculatorWithUI
+@testable import nbcampCalculatorWithUI
 
 final class nbcampCalculatorWithUITests: XCTestCase {
     
@@ -29,59 +29,58 @@ final class nbcampCalculatorWithUITests: XCTestCase {
         XCTAssertEqual(result, ["2.5", "+", "3.3"], "2.5+3.5의 계산 결과는 5.8여야 합니다.")
     }
     
-    // 덧셈 테스트
-    func testAddition() {
-        let input = "2+3"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "5.0", "2+3의 계산 결과는 5.0여야 합니다.")
+    func testSimpleAddition() throws {
+        let result = try calculator.calculate(input: "1+2")
+        XCTAssertEqual(result, "3")
     }
     
-    // 뺄셈 테스트
-    func testSubtraction() {
-        let input = "5-3"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "2.0", "5-3의 계산 결과는 2.0여야 합니다.")
+    func testSimpleSubtraction() throws {
+        let result = try calculator.calculate(input: "5-3")
+        XCTAssertEqual(result, "2")
     }
     
-    // 곱셈 테스트
-    func testMultiplication() {
-        let input = "2*3"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "6.0", "2*3의 계산 결과는 6.0이어야 합니다.")
+    func testSimpleMultiplication() throws {
+        let result = try calculator.calculate(input: "2*4")
+        XCTAssertEqual(result, "8")
     }
     
-    // 나눗셈 테스트
-    func testDivision() {
-        let input = "8/2"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "4.0", "8/2의 계산 결과는 4.0여야 합니다.")
+    func testSimpleDivision() throws {
+        let result = try calculator.calculate(input: "10/2")
+        XCTAssertEqual(result, "5")
+    }
+        
+    func testOrderOfOperations_MultiplicationBeforeAddition() throws {
+        let result = try calculator.calculate(input: "2+3*4")
+        XCTAssertEqual(result, "14")
     }
     
-    // 덧셈과 곱셈이 함께 있는 경우
-    func testMixedOperators_MultiplicationPrecedence() {
-        let input = "2+3*4"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "14.0", "연산자 우선순위에 따라 2+3*4의 결과는 14.0여야 합니다.")
+    func testOrderOfOperations_MixAll() throws {
+        let result = try calculator.calculate(input: "10-2*3+4/2")
+        XCTAssertEqual(result, "6")
     }
     
-    // 뺄셈과 나눗셈이 함께 있는 경우
-    func testMixedOperators_DivisionPrecedence() {
-        let input = "10-2/2"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "9.0", "연산자 우선순위에 따라 10-2/2의 결과는 9.0여야 합니다.")
+    func testDecimalPrecision() throws {
+        let result = try calculator.calculate(input: "2.5*2")
+        XCTAssertEqual(result, "5")
     }
     
-    // 여러 개의 동일 연산자에 대한 테스트: 1+2+3
-    func testMultipleSamePrecedence() {
-        let input = "1+2+3"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "6.0", "연속된 덧셈 연산은 왼쪽부터 계산되어 1+2+3의 결과는 6.0이어야 합니다.")
+    func testFloatResultWithoutRounding() throws {
+        let result = try calculator.calculate(input: "5/2")
+        XCTAssertEqual(result, "2.5")
+    }
+        
+    func testLeadingAndTrailingSpaces() throws {
+        let result = try calculator.calculate(input: " 3 + 4 ")
+        XCTAssertEqual(result, "7")
     }
     
-    // 복합 연산 테스트
-    func testComplexExpression() {
-        let input = "2+3*4-5/1"
-        let result = calculator.calculate(input: input)
-        XCTAssertEqual(result, "9.0", "복합 연산 2+3*4-5/1의 결과는 9.0여야 합니다.")
+    func testMultipleDigitNumbers() throws {
+        let result = try calculator.calculate(input: "100+200*3")
+        XCTAssertEqual(result, "700")
+    }
+    
+    func testLongExpression() throws {
+        let result = try calculator.calculate(input: "10+6*7+9*9-150/3")
+        XCTAssertEqual(result, "83")
     }
 }
