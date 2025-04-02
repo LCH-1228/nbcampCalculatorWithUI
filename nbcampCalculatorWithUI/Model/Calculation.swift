@@ -35,7 +35,7 @@ class MultiplyCalculation: CalculationProtocol {
         var result = (decimalNum1 as Decimal) * (decimalNum2 as Decimal)
 
         var roundedResult = Decimal()
-        NSDecimalRound(&roundedResult, &result, 9, NSDecimalNumber.RoundingMode.plain)
+        NSDecimalRound(&roundedResult, &result, 5, NSDecimalNumber.RoundingMode.plain)
         return Double(truncating: roundedResult as NSNumber)
     }
 }
@@ -43,13 +43,19 @@ class MultiplyCalculation: CalculationProtocol {
 class DivideCalculation: CalculationProtocol {
     
     func calculate(_ firstNumber: String, _ secondNumber: String) throws -> Double {
+        guard firstNumber != "0" else {
+            throw CustomError.devideZero
+        }
+        guard secondNumber != "0" else {
+            throw CustomError.devidedByZero
+        }
         let decimalNum1 = NSDecimalNumber(string: firstNumber)
         let decimalNum2 = NSDecimalNumber(string: secondNumber)
         
         var result = (decimalNum1 as Decimal) / (decimalNum2 as Decimal)
 
         var roundedResult = Decimal()
-        NSDecimalRound(&roundedResult, &result, 9, NSDecimalNumber.RoundingMode.plain)
+        NSDecimalRound(&roundedResult, &result, 5, NSDecimalNumber.RoundingMode.plain)
         return Double(truncating: roundedResult as NSNumber)
     }
 }
