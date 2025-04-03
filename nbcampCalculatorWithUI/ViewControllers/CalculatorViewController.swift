@@ -13,6 +13,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     var result = "0" // 연산 결과 변수
     var calculatorView = CalculatorView() // CalculatorView클래스로 calculator 인스턴스 생성
     var isContainedDot: Bool = false
+    var isContinue: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,14 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
     }
     
     // 버튼클릭시 동작(delegate를 통해 호출)
-    func buttonClick(sender: String) {
+    func buttonClick(sender originalSender: String) {
+        
+        // sender가 ÷이라면 연산을 위해 /로 변경
+        var sender = originalSender
+        if originalSender == "÷" {
+            sender = "/"
+        }
+        
         // 연산기호에 = 버튼 입력시 예외처리
         guard sender != "=" || (result.last != "+" && result.last != "-" && result.last != "*" && result.last != "/") else {
             printAlert(title: "연산 불가", message: "연산 기호 이후 숫자가 없습니다.", buttonTitle: "확인")
@@ -56,21 +64,32 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
                 }
             }
             isContainedDot = false
+            isContinue = false
             return
+        }
+        
+        // 연산 후 숫자와 연산기호 입력을 구별하여 연속 연산이 가능하도록하는 동작 조건
+        if isContinue == false && (sender == "+" || sender == "-" || sender == "*" || sender == "/"){
+            isContinue = true
+        } else if isContinue == false {
+            result = "0"
+            calculatorView.resultLabel.text = result
+            isContinue = true
         }
         
         // AC 버튼 입력시 동작
         guard sender != "AC" else {
             result = "0"
-            calculatorView.subLabel.text = calculatorView.resultLabel.text
             calculatorView.resultLabel.text = result
+            calculatorView.subLabel.text = result
             isContainedDot = false
+            isContinue = true
             return
         }
         
         // 초기값 0에 기호 입력시 예외처리
         guard (sender != "+" && sender != "-" && sender != "*" && sender != "/") || result != "0" else {
-            printAlert(title: "입력 불가", message: "초기값 0에 기호 입력은 불가능합니다.", buttonTitle: "확인")
+            printAlert(title: "입력 불가", message: "초기값 0에 연산기호 입력은 불가능합니다.", buttonTitle: "확인")
             return
         }
         
@@ -93,13 +112,13 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
             isContainedDot = true
         }
         
-        result += sender // 버튼입력 result에 추가
+        result += sender // 버튼입력 값을 result에 추가
         
         if result.first == "0" && !result.contains(".") { //첫 입력이 .이 아닐때 0생략
             result.removeFirst()
         }
         
-        calculatorView.resultLabel.text = result // reult값을 reulstLabel로 표시
+        calculatorView.resultLabel.text = result.replacingOccurrences(of: "/", with: "÷") // reult값을 reulstLabel로 표시할때 /기호를 ÷로 변경
          
         // 연산자 입력 후 소수점 2개 감지를 위한 Bool 타입 isContainedDot 상태 변경
         if sender == "+" || sender == "-" || sender == "*" || sender == "/"{

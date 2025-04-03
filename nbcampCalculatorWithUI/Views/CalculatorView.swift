@@ -73,7 +73,7 @@ class CalculatorView: UIView {
         }
         
         // 기능버튼 리스트
-        let funcButtonList = ["+", "-", "*", "/", "=", "AC"]
+        let funcButtonList = ["+", "-", "*", "÷", "=", "AC"]
         
         // 기능버튼 생성(배경: 오렌지)
         let funcButtons: [OrangeCalculatorButton] = funcButtonList.map {
