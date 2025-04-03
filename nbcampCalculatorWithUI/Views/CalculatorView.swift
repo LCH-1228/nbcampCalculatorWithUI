@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol CalculatorViewDelegate: NSObject {
+protocol CalculatorViewDelegate: AnyObject {
     func buttonClick(sender: String)
 }
 
 class CalculatorView: UIView {
     
-    var delegate: CalculatorViewDelegate? //CalculatorViewDelegate를 dlegate 변수로 지정
+    weak var delegate: CalculatorViewDelegate? //CalculatorViewDelegate를 dlegate 변수로 지정
     
     let resultLabel = CalculatorLabel(title: "0") //resultLabel 생성
     let subLabel = SubCalculatorLabel(title: "0") //subLabel 생성
