@@ -55,6 +55,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
                     calculatorView.resultLabel.text = result
                 }
             }
+            isContainedDot = false
             return
         }
         
@@ -63,6 +64,7 @@ class CalculatorViewController: UIViewController, CalculatorViewDelegate {
             result = "0"
             calculatorView.subLabel.text = calculatorView.resultLabel.text
             calculatorView.resultLabel.text = result
+            isContainedDot = false
             return
         }
         
